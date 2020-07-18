@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Input.h"
 
+
     /*Keyboard and Mouse is nearly done mouse position will be added after vector2d is ready
     i guess*/
     Input::Input(SDL_Event* e) {
@@ -81,4 +82,8 @@
         SingleUseString closep(cl);
         SingleUseString* retstr = new SingleUseString(&openp,x,&seperator,y,&closep);
         return retstr;
+    }
+    Vector2d* Input::getPosVec(){
+        Vector2d* mouseVec = new Vector2d(x,y);
+        return mouseVec;
     }

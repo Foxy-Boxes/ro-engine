@@ -1,4 +1,3 @@
-#pragma once
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_keyboard.h>
 #include <SDL2/SDL_keycode.h>
@@ -6,6 +5,7 @@
 #include <SDL2/SDL_gamecontroller.h>
 #include <SDL2/SDL_joystick.h>
 #include <bitset>
+#include "Vector2d.h"
 #include "../tools/SingleUseString.h"
 class Input
 {
@@ -39,4 +39,5 @@ public:
     SingleUseString* getPosStr(char);
     SingleUseString* getPosStr(const char*);
     SingleUseString* getPosStr(const char* ,const char* ,const char*);
+    Vector2d* getPosVec();
 };
