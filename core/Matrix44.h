@@ -1,3 +1,4 @@
+#include "../render/Window.h"
 class Matrix44
 {
 private:
@@ -7,6 +8,7 @@ public:
     Matrix44();
     Matrix44(double (*M)[4][4]);
     Matrix44& initIdentity();
+    Matrix44& initProjection(Window*,double,double,double);
     Matrix44* mul(Matrix44*);
     void setVal(int, int, double);
     double getVal(int, int);

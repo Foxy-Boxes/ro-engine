@@ -2,9 +2,9 @@
 #include <iostream>
 #include "Time.h"
 #include "Input.h"
-#include "../render/Window.h"
 #include "../render/TextureManager.h"
 #include "../tools/Log.h"
+#include "Mesh.h"
 
 int main(void){
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -14,7 +14,37 @@ int main(void){
     windowinstance.initWindow(900,700,SDL_WINDOW_SHOWN);
     TextureManager texmexinstance(windowinstance.getRenderer());
     texmexinstance.addTop(texmexinstance.createTexture("../assets/boi.png")->setDest(64,64));
-    windowinstance.clearWindow(255, 255, 255, 255);
+    windowinstance.clearWindow(0, 0, 0, 255);
+    Mesh Cube;
+    Vertex* ver[12][3] = {new Vertex(new Vector3d(0,0,0)), new Vertex(new Vector3d(0,1,0)), new Vertex(new Vector3d(1,1,0)),
+                            new Vertex(new Vector3d(0,0,0)), new Vertex(new Vector3d(1,1,0)), new Vertex(new Vector3d(1,0,0)),
+                            new Vertex(new Vector3d(1,0,0)), new Vertex(new Vector3d(1,1,0)), new Vertex(new Vector3d(1,1,1)),
+                            new Vertex(new Vector3d(1,0,0)), new Vertex(new Vector3d(1,1,1)), new Vertex(new Vector3d(1,0,1)),
+                            new Vertex(new Vector3d(1,0,1)), new Vertex(new Vector3d(1,1,1)), new Vertex(new Vector3d(0,1,1)),
+                            new Vertex(new Vector3d(1,0,1)), new Vertex(new Vector3d(0,1,1)), new Vertex(new Vector3d(0,0,1)),
+                            new Vertex(new Vector3d(0,0,1)), new Vertex(new Vector3d(0,1,1)), new Vertex(new Vector3d(0,1,0)),
+                            new Vertex(new Vector3d(0,0,1)), new Vertex(new Vector3d(0,1,0)), new Vertex(new Vector3d(0,0,0)),
+                            new Vertex(new Vector3d(0,1,0)), new Vertex(new Vector3d(0,1,1)), new Vertex(new Vector3d(1,1,1)),
+                            new Vertex(new Vector3d(0,1,0)), new Vertex(new Vector3d(1,1,1)), new Vertex(new Vector3d(1,1,0)),
+                            new Vertex(new Vector3d(1,0,1)), new Vertex(new Vector3d(0,0,1)), new Vertex(new Vector3d(0,0,0)),
+                            new Vertex(new Vector3d(1,0,1)), new Vertex(new Vector3d(0,0,0)), new Vertex(new Vector3d(1,0,0))};
+    Triangle* tri[12] = {new Triangle(ver[0][0],ver[0][1],ver[0][2]),
+                        new Triangle(ver[1][0],ver[1][1],ver[1][2]),
+                        new Triangle(ver[2][0],ver[2][1],ver[2][2]),
+                        new Triangle(ver[3][0],ver[3][1],ver[3][2]), 
+                        new Triangle(ver[4][0],ver[4][1],ver[4][2]),
+                        new Triangle(ver[5][0],ver[5][1],ver[5][2]),
+                        new Triangle(ver[6][0],ver[6][1],ver[6][2]),
+                        new Triangle(ver[7][0],ver[7][1],ver[7][2]),
+                        new Triangle(ver[8][0],ver[8][1],ver[8][2]),
+                        new Triangle(ver[9][0],ver[9][1],ver[9][2]),
+                        new Triangle(ver[10][0],ver[10][1],ver[10][2]),
+                        new Triangle(ver[11][0],ver[11][1],ver[11][2])};
+    for(int i = 0; i < 12;i++){
+        Cube.addTriangle(tri[i]);
+    }
+    Cube.translateMesh(0,0,3);
+    
     /*SDL_Window *screen = SDL_CreateWindow("My Game Window",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
@@ -45,7 +75,7 @@ int main(void){
             SDL_PollEvent(&event);
             texmexinstance.render();
 
-
+            Cube.drawMesh(&windowinstance, 0.1, 1000, 90);
             inputinstance.update();
             if(inputinstance.getKey(SDL_SCANCODE_ESCAPE)){
                 running = 0;

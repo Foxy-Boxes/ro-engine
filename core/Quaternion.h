@@ -1,6 +1,7 @@
 #include "../tools/SingleUseString.h"
 #include "Vector2d.h"
 #include "Vector3d.h"
+
 class Quaternion
 {
 private:

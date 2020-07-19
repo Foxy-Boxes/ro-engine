@@ -63,6 +63,17 @@
         Vector3d *vp = new Vector3d(vx, vy, vz);
         return vp;
     }
+    Vector3d* Vector3d::mulwithMatrix(Matrix44* matrix){
+        register double ox = x * matrix -> getVal(0,0) + y * matrix -> getVal(1,0) + z * matrix -> getVal(2,0) + matrix -> getVal(3,0);
+        register double oy = x * matrix -> getVal(0,1) + y * matrix -> getVal(1,1) + z * matrix -> getVal(2,1) + matrix -> getVal(3,1);
+        register double oz = x * matrix -> getVal(0,2) + y * matrix -> getVal(1,2) + z * matrix -> getVal(2,2) + matrix -> getVal(3,2);
+        register double ow = x * matrix -> getVal(0,3) + y * matrix -> getVal(1,3) + z * matrix -> getVal(2,3) + matrix -> getVal(3,3);
+
+        if(ow){
+            ox/=ow,oy/=ow,oz/=ow;
+        }
+        return new Vector3d(ox,oy,oz);
+    }
     double Vector3d::getX(){
         return x;
     }
@@ -71,6 +82,15 @@
     }
     double Vector3d::getZ(){
         return z;
+    }
+    void Vector3d::setX(double vx){
+        x = vx;
+    }
+    void Vector3d::setY(double vy){
+        y = vy;
+    }
+    void Vector3d::setZ(double vz){
+        z = vz;
     }
     double Vector3d::getLength(){
         return length;

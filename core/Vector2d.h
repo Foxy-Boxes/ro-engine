@@ -1,3 +1,4 @@
+#pragma once
 #include "../tools/SingleUseString.h"
 class Vector2d
 {

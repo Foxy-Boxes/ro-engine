@@ -1,4 +1,5 @@
 #include "../tools/SingleUseString.h"
+#include "Matrix44.h"
 #include "Vector2d.h"
 class Vector3d
 {
@@ -22,9 +23,13 @@ public:
     Vector3d& rotateXY(double);
     Vector3d& normalize();
     Vector3d* cross(Vector3d *);
+    Vector3d* mulwithMatrix(Matrix44*);
     double getX();
     double getY();
     double getZ();
+    void setX(double);
+    void setY(double);
+    void setZ(double);
     double getLength();
     SingleUseString* getStrRepr();
     SingleUseString* getStrRepr(char);
