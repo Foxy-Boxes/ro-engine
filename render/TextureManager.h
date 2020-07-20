@@ -1,4 +1,5 @@
 #include <vector>
+#include "Window.h"
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_image.h>
 class TextureObj
@@ -10,7 +11,7 @@ private:
     SDL_Rect *p_destR, *p_srcR; 
 
 public:
-    TextureObj(const char*, SDL_Renderer*);
+    TextureObj(const char*, SDL_Renderer**);
     TextureObj* setDest(int, int);
     TextureObj* setSrc(int, int);
     void updatePos(int, int);
@@ -29,10 +30,10 @@ class TextureManager
 private:
     /* data */
     TextureObjArray textobjects;
-    SDL_Renderer* renderer;
+    SDL_Renderer** renderer;
 
 public:
-    TextureManager(SDL_Renderer*);
+    TextureManager(Window*);
     TextureManager();
     void render();
     void addTop(TextureObj*);
@@ -44,7 +45,7 @@ public:
     void popRange(int,int);
     TextureObj* getTexturefromPos(int);
     TextureObj* createTexture(const char*);
-    void setRenderer(SDL_Renderer*);
+    void setRenderer(Window*);
     /*TODO convert this to linked list, no one will be sorting them, easy shuffle
     is better.*/
 };

@@ -1,8 +1,8 @@
 #include "TextureManager.h"
 
-    TextureObj::TextureObj(const char* str,SDL_Renderer* renderer){
+    TextureObj::TextureObj(const char* str,SDL_Renderer** r){
         SDL_Surface* surf = IMG_Load(str);
-        texture = SDL_CreateTextureFromSurface(renderer,surf);
+        texture = SDL_CreateTextureFromSurface(*r,surf);
         SDL_FreeSurface(surf);
         p_destR = new SDL_Rect();
         p_srcR = new SDL_Rect();
@@ -52,18 +52,18 @@
 
 
 
-    TextureManager::TextureManager(SDL_Renderer* r){
-        renderer = r;
+    TextureManager::TextureManager(Window* w){
+        renderer = w ->getRendererPointer();
     }
     TextureManager::TextureManager(){
         renderer = NULL;
     }
     void TextureManager::render(){
-        SDL_RenderClear(renderer);
+        //SDL_RenderClear(*renderer);
         for (TextureObjArray::iterator it=textobjects.begin(); it<textobjects.end(); it++){
-            SDL_RenderCopy(renderer,(*it)->getTexture(),NULL,(*it) -> getDest());
+            SDL_RenderCopy(*renderer,(*it)->getTexture(),NULL,(*it) -> getDest());
         }
-        SDL_RenderPresent(renderer);
+        //SDL_RenderPresent(*renderer);
     }
     void TextureManager::addTop(TextureObj* to){
         TextureObjArray::iterator it;
@@ -105,6 +105,6 @@
         TextureObj* retObj = new TextureObj(str, renderer);
         return retObj;
     }
-    void TextureManager::setRenderer(SDL_Renderer* r){
-        renderer = r;
+    void TextureManager::setRenderer(Window* w){
+        renderer = w -> getRendererPointer();
     }

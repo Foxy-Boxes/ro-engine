@@ -12,22 +12,22 @@ int main(void){
     //windowinstance.clearWindow();//you shouldnt do this of course.
     /*'cause you need to init first*/
     windowinstance.initWindow(900,700,SDL_WINDOW_SHOWN);
-    TextureManager texmexinstance(windowinstance.getRenderer());
+    TextureManager texmexinstance(&windowinstance);
     texmexinstance.addTop(texmexinstance.createTexture("../assets/boi.png")->setDest(64,64));
-    windowinstance.clearWindow(0, 0, 0, 255);
+    windowinstance.clearWindow(230, 255, 255, 255);
     Mesh Cube;
-    Vertex* ver[12][3] = {new Vertex(new Vector3d(0,0,0)), new Vertex(new Vector3d(0,1,0)), new Vertex(new Vector3d(1,1,0)),
-                            new Vertex(new Vector3d(0,0,0)), new Vertex(new Vector3d(1,1,0)), new Vertex(new Vector3d(1,0,0)),
-                            new Vertex(new Vector3d(1,0,0)), new Vertex(new Vector3d(1,1,0)), new Vertex(new Vector3d(1,1,1)),
-                            new Vertex(new Vector3d(1,0,0)), new Vertex(new Vector3d(1,1,1)), new Vertex(new Vector3d(1,0,1)),
-                            new Vertex(new Vector3d(1,0,1)), new Vertex(new Vector3d(1,1,1)), new Vertex(new Vector3d(0,1,1)),
-                            new Vertex(new Vector3d(1,0,1)), new Vertex(new Vector3d(0,1,1)), new Vertex(new Vector3d(0,0,1)),
-                            new Vertex(new Vector3d(0,0,1)), new Vertex(new Vector3d(0,1,1)), new Vertex(new Vector3d(0,1,0)),
-                            new Vertex(new Vector3d(0,0,1)), new Vertex(new Vector3d(0,1,0)), new Vertex(new Vector3d(0,0,0)),
-                            new Vertex(new Vector3d(0,1,0)), new Vertex(new Vector3d(0,1,1)), new Vertex(new Vector3d(1,1,1)),
-                            new Vertex(new Vector3d(0,1,0)), new Vertex(new Vector3d(1,1,1)), new Vertex(new Vector3d(1,1,0)),
-                            new Vertex(new Vector3d(1,0,1)), new Vertex(new Vector3d(0,0,1)), new Vertex(new Vector3d(0,0,0)),
-                            new Vertex(new Vector3d(1,0,1)), new Vertex(new Vector3d(0,0,0)), new Vertex(new Vector3d(1,0,0))};
+    Vertex* ver[12][3] = {  {new Vertex(new Vector3d(0.0,0.0,0.0)), new Vertex(new Vector3d(0.0,1.0,0.0)), new Vertex(new Vector3d(1.0,1.0,0.0))},
+                            {new Vertex(new Vector3d(0.0,0.0,0.0)), new Vertex(new Vector3d(1.0,1.0,0.0)), new Vertex(new Vector3d(1.0,0.0,0.0))},
+                            {new Vertex(new Vector3d(1.0,0.0,0.0)), new Vertex(new Vector3d(1.0,1.0,0.0)), new Vertex(new Vector3d(1.0,1.0,1.0))},
+                            {new Vertex(new Vector3d(1.0,0.0,0.0)), new Vertex(new Vector3d(1.0,1.0,1.0)), new Vertex(new Vector3d(1.0,0.0,1.0))},
+                            {new Vertex(new Vector3d(1.0,0.0,1.0)), new Vertex(new Vector3d(1.0,1.0,1.0)), new Vertex(new Vector3d(0.0,1.0,1.0))},
+                            {new Vertex(new Vector3d(1.0,0.0,1.0)), new Vertex(new Vector3d(0.0,1.0,1.0)), new Vertex(new Vector3d(0.0,0.0,1.0))},
+                            {new Vertex(new Vector3d(0.0,0.0,1.0)), new Vertex(new Vector3d(0.0,1.0,1.0)), new Vertex(new Vector3d(0.0,1.0,0.0))},
+                            {new Vertex(new Vector3d(0.0,0.0,1.0)), new Vertex(new Vector3d(0.0,1.0,0.0)), new Vertex(new Vector3d(0.0,0.0,0.0))},
+                            {new Vertex(new Vector3d(0.0,1.0,0.0)), new Vertex(new Vector3d(0.0,1.0,1.0)), new Vertex(new Vector3d(1.0,1.0,1.0))},
+                            {new Vertex(new Vector3d(0.0,1.0,0.0)), new Vertex(new Vector3d(1.0,1.0,1.0)), new Vertex(new Vector3d(1.0,1.0,0.0))},
+                            {new Vertex(new Vector3d(1.0,0.0,1.0)), new Vertex(new Vector3d(0.0,0.0,1.0)), new Vertex(new Vector3d(0.0,0.0,0.0))},
+                            {new Vertex(new Vector3d(1.0,0.0,1.0)), new Vertex(new Vector3d(0.0,0.0,0.0)), new Vertex(new Vector3d(1.0,0.0,0.0))}};
     Triangle* tri[12] = {new Triangle(ver[0][0],ver[0][1],ver[0][2]),
                         new Triangle(ver[1][0],ver[1][1],ver[1][2]),
                         new Triangle(ver[2][0],ver[2][1],ver[2][2]),
@@ -43,8 +43,7 @@ int main(void){
     for(int i = 0; i < 12;i++){
         Cube.addTriangle(tri[i]);
     }
-    Cube.translateMesh(0,0,3);
-    
+    Mesh CubeAnimated;
     /*SDL_Window *screen = SDL_CreateWindow("My Game Window",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
@@ -62,6 +61,9 @@ int main(void){
     Log loginstance;
     bool running = true;
     int frames = 0;
+    double dtheta = 0;
+    Matrix44 matRotZ, matRotX, matProj;
+    matRotZ.initIdentity(); matRotX.initIdentity(); matProj.initProjection(&windowinstance, 0.1, 1000.0, 90.0);
     long double framecounter = 0;
     timeinstance.start();
     while (running)
@@ -72,10 +74,24 @@ int main(void){
         while (timeinstance.frame())
         {
             frames++;
+            dtheta = (dtheta > 360.0) ? (dtheta - 360.0) : dtheta + 0.01;
+            
+            matRotZ.setVal(0,0,cos(dtheta));
+            matRotZ.setVal(0,1,sin(dtheta));
+            matRotZ.setVal(1,0,-sin(dtheta));
+            matRotZ.setVal(1,1,cos(dtheta));
+            matRotX.setVal(1,1,cos(dtheta * 0.5));
+            matRotX.setVal(1,2,sin(dtheta * 0.5));
+            matRotX.setVal(2,1,-sin(dtheta * 0.5));
+            matRotX.setVal(2,2,cos(dtheta * 0.5));
+            Cube.transformMesh(&CubeAnimated,matRotZ.mul(&matRotX)) -> translateMesh(0,0,3);
+            
             SDL_PollEvent(&event);
+            windowinstance.render();
             texmexinstance.render();
+            
+            CubeAnimated.drawMesh(&windowinstance, &matProj);
 
-            Cube.drawMesh(&windowinstance, 0.1, 1000, 90);
             inputinstance.update();
             if(inputinstance.getKey(SDL_SCANCODE_ESCAPE)){
                 running = 0;

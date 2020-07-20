@@ -1,3 +1,4 @@
+#pragma once
 #include <SDL2/SDL.h>
 #include "../tools/SingleUseString.h"
 #include <iostream>
@@ -10,7 +11,7 @@ private:
     char* p_label;
     Uint32 flag;
     SDL_Window *screen;
-    SDL_Renderer *renderer;
+    SDL_Renderer **p_renderer;
     bool fullscreen;
 public:
     Window(const char*, bool);
@@ -20,9 +21,10 @@ public:
     void initWindow();
     void clearWindow();
     void clearWindow(int, int, int, int);
+    void render();
     int getHeight();
     int getWidth();
     SingleUseString* getLabel();
     void setFullscreen(bool);
-    SDL_Renderer* getRenderer();
+    SDL_Renderer** getRendererPointer();
 };

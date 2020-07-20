@@ -16,7 +16,7 @@ yum install SDL2-devel SDL2_image-devel
 ================================================
 ```shell
 cd core
-g++ main.cpp -lSDL2 Input.cpp Time.cpp Vector2d.cpp Vector3d.cpp ../tools/Log.cpp ../tools/SingleUseString.cpp ../render/Window.cpp ../render/TextureManager.cpp -lSDL2_image
+g++ main.cpp -lSDL2 Input.cpp Time.cpp Vector2d.cpp Vector3d.cpp ../tools/Log.cpp ../tools/SingleUseString.cpp ../render/Window.cpp ../render/TextureManager.cpp Mesh.cpp Matrix44.cpp Vertex.cpp Triangle.cpp -lSDL2_image
 ./a.out
 ```
 Try it handsome!
