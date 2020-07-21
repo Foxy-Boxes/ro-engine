@@ -11,6 +11,7 @@ private:
     double length;
 public:
     Vector3d(double,double,double);
+    Vector3d();
     Vector3d* add(Vector3d *);
     Vector3d* mul(Vector3d *);
     Vector3d* sub(Vector3d *);
@@ -24,6 +25,7 @@ public:
     Vector3d& normalize();
     Vector3d* cross(Vector3d *);
     Vector3d* mulwithMatrix(Matrix44*);
+    Vector3d* decDistortion(Vector3d*);
     double getX();
     double getY();
     double getZ();
@@ -31,6 +33,7 @@ public:
     void setY(double);
     void setZ(double);
     double getLength();
+    void updateLength();
     SingleUseString* getStrRepr();
     SingleUseString* getStrRepr(char);
     SingleUseString* getStrRepr(const char*);

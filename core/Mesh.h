@@ -4,13 +4,16 @@ class Mesh
 {
 private:
     /* data */
-    std::vector<Triangle*> *p_triangles;
+    std::vector<Triangle*> * p_triangles;
+    void resetMesh();
 public:
     Mesh();
+    Mesh(Triangle*[],int);
     void addTriangle(Triangle*);
     void drawMesh(Window*,Matrix44*,Uint8,Uint8,Uint8,Uint8);
     void drawMesh(Window*,Matrix44*);
-    void resetMesh();
+    void clearMesh();
+    ~Mesh();
     Mesh& translateMesh(double,double,double);
     Mesh& scaleMesh(double,double,double);
     Mesh& scaleMesh(double);

@@ -15,19 +15,18 @@ int main(void){
     TextureManager texmexinstance(&windowinstance);
     texmexinstance.addTop(texmexinstance.createTexture("../assets/boi.png")->setDest(64,64));
     windowinstance.clearWindow(230, 255, 255, 255);
-    Mesh Cube;
-    Vertex* ver[12][3] = {  {new Vertex(new Vector3d(0.0,0.0,0.0)), new Vertex(new Vector3d(0.0,1.0,0.0)), new Vertex(new Vector3d(1.0,1.0,0.0))},
-                            {new Vertex(new Vector3d(0.0,0.0,0.0)), new Vertex(new Vector3d(1.0,1.0,0.0)), new Vertex(new Vector3d(1.0,0.0,0.0))},
-                            {new Vertex(new Vector3d(1.0,0.0,0.0)), new Vertex(new Vector3d(1.0,1.0,0.0)), new Vertex(new Vector3d(1.0,1.0,1.0))},
-                            {new Vertex(new Vector3d(1.0,0.0,0.0)), new Vertex(new Vector3d(1.0,1.0,1.0)), new Vertex(new Vector3d(1.0,0.0,1.0))},
-                            {new Vertex(new Vector3d(1.0,0.0,1.0)), new Vertex(new Vector3d(1.0,1.0,1.0)), new Vertex(new Vector3d(0.0,1.0,1.0))},
-                            {new Vertex(new Vector3d(1.0,0.0,1.0)), new Vertex(new Vector3d(0.0,1.0,1.0)), new Vertex(new Vector3d(0.0,0.0,1.0))},
-                            {new Vertex(new Vector3d(0.0,0.0,1.0)), new Vertex(new Vector3d(0.0,1.0,1.0)), new Vertex(new Vector3d(0.0,1.0,0.0))},
-                            {new Vertex(new Vector3d(0.0,0.0,1.0)), new Vertex(new Vector3d(0.0,1.0,0.0)), new Vertex(new Vector3d(0.0,0.0,0.0))},
-                            {new Vertex(new Vector3d(0.0,1.0,0.0)), new Vertex(new Vector3d(0.0,1.0,1.0)), new Vertex(new Vector3d(1.0,1.0,1.0))},
-                            {new Vertex(new Vector3d(0.0,1.0,0.0)), new Vertex(new Vector3d(1.0,1.0,1.0)), new Vertex(new Vector3d(1.0,1.0,0.0))},
-                            {new Vertex(new Vector3d(1.0,0.0,1.0)), new Vertex(new Vector3d(0.0,0.0,1.0)), new Vertex(new Vector3d(0.0,0.0,0.0))},
-                            {new Vertex(new Vector3d(1.0,0.0,1.0)), new Vertex(new Vector3d(0.0,0.0,0.0)), new Vertex(new Vector3d(1.0,0.0,0.0))}};
+    Vertex* ver[12][3] = {  {new Vertex(0.0,0.0,0.0), new Vertex(0.0,1.0,0.0), new Vertex(1.0,1.0,0.0)},
+                            {new Vertex(0.0,0.0,0.0), new Vertex(1.0,1.0,0.0), new Vertex(1.0,0.0,0.0)},
+                            {new Vertex(1.0,0.0,0.0), new Vertex(1.0,1.0,0.0), new Vertex(1.0,1.0,1.0)},
+                            {new Vertex(1.0,0.0,0.0), new Vertex(1.0,1.0,1.0), new Vertex(1.0,0.0,1.0)},
+                            {new Vertex(1.0,0.0,1.0), new Vertex(1.0,1.0,1.0), new Vertex(0.0,1.0,1.0)},
+                            {new Vertex(1.0,0.0,1.0), new Vertex(0.0,1.0,1.0), new Vertex(0.0,0.0,1.0)},
+                            {new Vertex(0.0,0.0,1.0), new Vertex(0.0,1.0,1.0), new Vertex(0.0,1.0,0.0)},
+                            {new Vertex(0.0,0.0,1.0), new Vertex(0.0,1.0,0.0), new Vertex(0.0,0.0,0.0)},
+                            {new Vertex(0.0,1.0,0.0), new Vertex(0.0,1.0,1.0), new Vertex(1.0,1.0,1.0)},
+                            {new Vertex(0.0,1.0,0.0), new Vertex(1.0,1.0,1.0), new Vertex(1.0,1.0,0.0)},
+                            {new Vertex(1.0,0.0,1.0), new Vertex(0.0,0.0,1.0), new Vertex(0.0,0.0,0.0)},
+                            {new Vertex(1.0,0.0,1.0), new Vertex(0.0,0.0,0.0), new Vertex(1.0,0.0,0.0)}};
     Triangle* tri[12] = {new Triangle(ver[0][0],ver[0][1],ver[0][2]),
                         new Triangle(ver[1][0],ver[1][1],ver[1][2]),
                         new Triangle(ver[2][0],ver[2][1],ver[2][2]),
@@ -40,10 +39,9 @@ int main(void){
                         new Triangle(ver[9][0],ver[9][1],ver[9][2]),
                         new Triangle(ver[10][0],ver[10][1],ver[10][2]),
                         new Triangle(ver[11][0],ver[11][1],ver[11][2])};
-    for(int i = 0; i < 12;i++){
-        Cube.addTriangle(tri[i]);
-    }
+    Mesh Cube(tri,12);
     Mesh CubeAnimated;
+    Cube.scaleMesh(2.0);
     /*SDL_Window *screen = SDL_CreateWindow("My Game Window",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
@@ -74,8 +72,8 @@ int main(void){
         while (timeinstance.frame())
         {
             frames++;
-            dtheta = (dtheta > 360.0) ? (dtheta - 360.0) : dtheta + 0.01;
-            
+            dtheta = (dtheta > 360.0) ? (dtheta - 360.0) : (dtheta + 0.01);
+
             matRotZ.setVal(0,0,cos(dtheta));
             matRotZ.setVal(0,1,sin(dtheta));
             matRotZ.setVal(1,0,-sin(dtheta));
@@ -84,8 +82,8 @@ int main(void){
             matRotX.setVal(1,2,sin(dtheta * 0.5));
             matRotX.setVal(2,1,-sin(dtheta * 0.5));
             matRotX.setVal(2,2,cos(dtheta * 0.5));
-            Cube.transformMesh(&CubeAnimated,matRotZ.mul(&matRotX)) -> translateMesh(0,0,3);
             
+            Cube.transformMesh(&CubeAnimated,matRotZ.mul(&matRotX)) -> translateMesh(0,0,8);
             SDL_PollEvent(&event);
             windowinstance.render();
             texmexinstance.render();
@@ -153,5 +151,4 @@ int main(void){
         }
         
     }
-    
 }

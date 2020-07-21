@@ -1,34 +1,23 @@
 #include "Vertex.h"
-    Vertex::Vertex(Vector3d* p_v){
-        p_posVec = p_v;
+    Vertex::Vertex(double x,double y,double z){
+        this -> setX(x);
+        this -> setY(y);
+        this -> setZ(z);
+        this -> updateLength();
     }
-    double Vertex::getX(){
-        return p_posVec -> getX();
+    Vertex::Vertex(Vector3d* V){
+        this -> setX(V -> getX());
+        this -> setY(V -> getY());
+        this -> setZ(V -> getZ());
+        this -> updateLength();
+        delete[] V;
     }
-    double Vertex::getY(){
-        return p_posVec -> getY();
+    void Vertex::incX(double vx){
+        this -> setX(this ->getX() + vx);
     }
-    double Vertex::getZ(){
-        return p_posVec -> getZ();
+    void Vertex::incY(double vy){    
+        this -> setY(this ->getY() + vy);
     }
-    Vector3d* Vertex::getVec(){
-        return p_posVec;
-    }
-    void Vertex::setX(double x){
-        p_posVec -> setX(x);
-    }
-    void Vertex::setY(double y){
-        p_posVec -> setY(y);
-    }
-    void Vertex::setZ(double z){
-        p_posVec -> setZ(z);
-    }
-    void Vertex::incX(double x){
-        p_posVec -> setX(p_posVec ->getX()+ x);
-    }
-    void Vertex::incY(double y){    
-        p_posVec -> setY(p_posVec ->getY()+ y);
-    }
-    void Vertex::incZ(double z){    
-        p_posVec -> setZ(p_posVec ->getZ()+ z);
+    void Vertex::incZ(double vz){    
+        this -> setZ(this ->getZ() + vz);
     }

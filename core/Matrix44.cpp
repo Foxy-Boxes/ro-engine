@@ -26,7 +26,7 @@
         return *this;
     }
     Matrix44* Matrix44::mul(Matrix44* M){
-        double matrix[4][4];
+        register double matrix[4][4];
         matrix[0][0] = m[0][0] * M->getVal(0,0) + m[0][1] * M->getVal(1,0) + m[0][2] * M->getVal(2,0) + m[0][3] * M->getVal(3,0); 
         matrix[0][1] = m[0][0] * M->getVal(0,1) + m[0][1] * M->getVal(1,1) + m[0][2] * M->getVal(2,1) + m[0][3] * M->getVal(3,1); 
         matrix[0][2] = m[0][0] * M->getVal(0,2) + m[0][1] * M->getVal(1,2) + m[0][2] * M->getVal(2,2) + m[0][3] * M->getVal(3,2); 
