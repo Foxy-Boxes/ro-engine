@@ -41,7 +41,7 @@ int main(void){
                         new Triangle(ver[11][0],ver[11][1],ver[11][2])};
     Mesh Cube(tri,12);
     Mesh CubeAnimated;
-    Cube.scaleMesh(2.0);
+    Cube.scaleMesh(0.5);
     /*SDL_Window *screen = SDL_CreateWindow("My Game Window",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
@@ -83,7 +83,7 @@ int main(void){
             matRotX.setVal(2,1,-sin(dtheta * 0.5));
             matRotX.setVal(2,2,cos(dtheta * 0.5));
             
-            Cube.transformMesh(&CubeAnimated,matRotZ.mul(&matRotX)) -> translateMesh(0,0,8);
+            Cube.transformMesh(&CubeAnimated,matRotZ.mul(&matRotX)) -> translateMesh(0,0,1.5);
             SDL_PollEvent(&event);
             windowinstance.render();
             texmexinstance.render();

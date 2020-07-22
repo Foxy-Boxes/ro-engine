@@ -77,9 +77,9 @@
         return new Vector3d(ox,oy,oz);
     }
     Vector3d* Vector3d::decDistortion(Vector3d* befMul){
-        z -= (befMul -> getZ() < 3) * (z * 0.001) + (befMul -> getZ() < 2) * (z * 0.001) + (befMul -> getZ() < 1) * (z * 0.001);
-        y -= (befMul -> getZ() < 3) * (y * 0.001) + (befMul -> getZ() < 2) * (y * 0.001) + (befMul -> getZ() < 1) * (y * 0.001);
-        x -= (befMul -> getZ() < 3) * (x * 0.001) + (befMul -> getZ() < 2) * (x * 0.001) + (befMul -> getZ() < 1) * (x * 0.001);
+        z -= ((befMul -> getZ() < 3) * (4 - befMul -> getZ())) * (z * 0.001);
+        y -= ((befMul -> getZ() < 3) * (4 - befMul -> getZ())) * (y * 0.001);
+        x -= ((befMul -> getZ() < 3) * (4 - befMul -> getZ())) * (x * 0.001);
         return this;
     }
     double Vector3d::getX(){
