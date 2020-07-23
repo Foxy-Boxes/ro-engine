@@ -6,7 +6,7 @@
 #include <SDL2/SDL_gamecontroller.h>
 #include <SDL2/SDL_joystick.h>
 #include <bitset>
-#include "Vector2d.h"
+#include "math/Vector2d.h"
 #include "../tools/SingleUseString.h"
 class Input
 {

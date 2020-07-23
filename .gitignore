@@ -1,2 +1,5 @@
 core/a.out
+core/supposedly_performant.out
+core/bench_new.out
+core/bench_old.out
 .vscode/

@@ -4,7 +4,7 @@
 #include "Input.h"
 #include "../render/TextureManager.h"
 #include "../tools/Log.h"
-#include "Mesh.h"
+#include "math/Mesh.h"
 
 int main(void){
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -41,7 +41,6 @@ int main(void){
                         new Triangle(ver[11][0],ver[11][1],ver[11][2])};
     Mesh Cube(tri,12);
     Mesh CubeAnimated;
-    Cube.scaleMesh(0.5);
     /*SDL_Window *screen = SDL_CreateWindow("My Game Window",
                           SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED,
@@ -64,15 +63,17 @@ int main(void){
     matRotZ.initIdentity(); matRotX.initIdentity(); matProj.initProjection(&windowinstance, 0.1, 1000.0, 90.0);
     long double framecounter = 0;
     timeinstance.start();
+    bool render;
     while (running)
     {
-        
+        render = false;
         
         framecounter += timeinstance.update();
         while (timeinstance.frame())
         {
             frames++;
-            dtheta = (dtheta > 360.0) ? (dtheta - 360.0) : (dtheta + 0.01);
+            dtheta = (dtheta > 360.0) ? (dtheta - 360.0) : (dtheta + timeinstance.getDelta());
+            render = true;
 
             matRotZ.setVal(0,0,cos(dtheta));
             matRotZ.setVal(0,1,sin(dtheta));
@@ -83,12 +84,11 @@ int main(void){
             matRotX.setVal(2,1,-sin(dtheta * 0.5));
             matRotX.setVal(2,2,cos(dtheta * 0.5));
             
-            Cube.transformMesh(&CubeAnimated,matRotZ.mul(&matRotX)) -> translateMesh(0,0,1.5);
-            SDL_PollEvent(&event);
-            windowinstance.render();
-            texmexinstance.render();
             
-            CubeAnimated.drawMesh(&windowinstance, &matProj);
+            SDL_PollEvent(&event);
+            
+            
+            
 
             inputinstance.update();
             if(inputinstance.getKey(SDL_SCANCODE_ESCAPE)){
@@ -149,6 +149,11 @@ int main(void){
                 framecounter=0;
             }
         }
-        
+        if(render){
+            windowinstance.render();
+            texmexinstance.render();
+            Cube.transformMesh(&CubeAnimated,matRotZ.mul(&matRotX)) -> translateMesh(0,0,8);
+            CubeAnimated.drawMesh(&windowinstance, &matProj);
+        }
     }
 }

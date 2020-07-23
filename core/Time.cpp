@@ -1,4 +1,3 @@
-#include <ctime>
 #include "Time.h"
 
         /* Time is working but we may add some sort of sleep functionality*/ 
@@ -7,9 +6,9 @@
         double delta;
         clock_t startClock;
         long double unprocessed;
-        Time::Time(register double fr){
+        Time::Time(double fr){
             framerate = fr;
-            delta = (double)1/fr;
+            delta = 1.0/fr;
             startClock = clock();
             unprocessed = 0;
         }
@@ -40,5 +39,5 @@
         }
         void Time::setFrameRate(double fr){
             framerate = fr;
-            delta = (double)1/fr;
+            delta = 1.0/fr;
         }

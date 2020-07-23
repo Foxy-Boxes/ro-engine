@@ -2,6 +2,7 @@
 #include "Window.h"
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_image.h>
+
 class TextureObj
 {
 private:
@@ -49,6 +50,7 @@ public:
     /*TODO convert this to linked list, no one will be sorting them, easy shuffle
     is better.*/
 };
+
 
 
 
