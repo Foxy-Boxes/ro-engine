@@ -37,4 +37,4 @@ g++ benchmark_new.cpp -lSDL2 Input.cpp Time.cpp math/Vector2d.cpp math/Vector3d.
 ./bench_old.out
 ./bench_new.out
 ```
-Try it handsome!
+The new implementation is basically a very basic allocator that takes the stack's end position as a hint and allocates the whole block for meshes. This gives a 10% increase on my computer with the spaceship and nearly no increase with the cube. A better version would be to allocate once and have an allocator to distribute the handles, currently I'm hinting the previous handle for a new allocation.
